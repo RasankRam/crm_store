@@ -149,7 +149,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         password: this.password,
         is_english: +this.is_english
       };
-      this.$store.dispatch('update_authUser', data).then(function () {
+      this.$store.dispatch('update_user', data).then(function () {
         return _this.$message('Профиль успешно обновлен');
       });
     }

@@ -50,7 +50,7 @@ export default {
   }),
   methods: {
     logout() {
-      this.$store.dispatch('auth_logout')
+      this.$store.dispatch('auth_logout').then(() => this.$router.push('/login'))
     }
   },
   computed: {

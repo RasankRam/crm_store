@@ -117,7 +117,7 @@ export default {
         is_english: +this.is_english
       }
 
-      this.$store.dispatch('update_authUser', data).then(() => this.$message('Профиль успешно обновлен'));
+      this.$store.dispatch('update_user', data).then(() => this.$message('Профиль успешно обновлен'));
 
     }
   }

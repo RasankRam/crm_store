@@ -2030,7 +2030,11 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     logout: function logout() {
-      this.$store.dispatch('auth_logout');
+      var _this = this;
+
+      this.$store.dispatch('auth_logout').then(function () {
+        return _this.$router.push('/login');
+      });
     }
   },
   computed: {
