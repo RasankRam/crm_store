@@ -299,7 +299,9 @@ var render = function() {
             }
           }),
           _vm._v(" "),
-          _c("label", { attrs: { for: "username" } }, [_vm._v("Логин")]),
+          _c("label", { attrs: { for: "username" } }, [
+            _vm._v("Логин --> employee")
+          ]),
           _vm._v(" "),
           _vm.$v.username.$dirty && !_vm.$v.username.required
             ? _c("small", { staticClass: "helper-text invalid" }, [
@@ -340,7 +342,7 @@ var render = function() {
           }),
           _vm._v(" "),
           _c("label", { attrs: { for: "password" } }, [
-            _vm._v(_vm._s(_vm._f("localize")("Password")))
+            _vm._v("Пароль --> employee")
           ]),
           _vm._v(" "),
           _vm.$v.password.$dirty && !_vm.$v.password.required

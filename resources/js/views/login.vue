@@ -9,7 +9,7 @@
           type="text"
           v-model.trim="username"
           :class="{invalid: ($v.username.$dirty && !$v.username.required)}" />
-        <label for="username">Логин</label>
+        <label for="username">Логин --> employee</label>
         <small class="helper-text invalid"
                v-if="$v.username.$dirty && !$v.username.required"
         >{{ 'Message_UsernameRequired' | localize }}</small>
@@ -21,7 +21,7 @@
           v-model.trim="password"
           :class="{invalid: ($v.password.$dirty && !$v.password.required) || ($v.password.$dirty && !$v.password.minLength)}"
         />
-        <label for="password">{{ 'Password' | localize }}</label>
+        <label for="password">Пароль --> employee</label>
 <!--        <div v-if="error-section" class="error-section"></div>-->
         <small
           class="helper-text invalid"
