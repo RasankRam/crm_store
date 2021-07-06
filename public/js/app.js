@@ -2020,7 +2020,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -2036,17 +2035,12 @@ __webpack_require__.r(__webpack_exports__);
   },
   computed: {
     name: function name() {
-      return this.$initials(this.$store.getters.authUser.name);
+      return this.$store.getters.user.name;
     }
   },
   mounted: function mounted() {
-    var _this = this;
-
     var elems = document.querySelectorAll('.sidenav');
     var instances = M.Sidenav.init(elems);
-    this.interval = setInterval(function () {
-      _this.date = new Date();
-    }, 1000);
     this.dropdown = M.Dropdown.init(this.$refs.dropdown, {
       constrainWidth: false
     });
@@ -2120,8 +2114,15 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     reset: function reset() {
-      this.$store.dispatch('auth_logout');
-      axios__WEBPACK_IMPORTED_MODULE_0___default().get('/api/reset');
+      var _this = this;
+
+      this.$store.dispatch('auth_logout').then(function () {
+        axios__WEBPACK_IMPORTED_MODULE_0___default().get('/api/reset');
+
+        _this.$message('Вы успешно сбросили проект в начальное состояние!');
+
+        _this.$router.push('/login');
+      });
     }
   }
 });
@@ -2255,14 +2256,17 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     create: function create() {
+      var _this = this;
+
       var form = document.querySelector('#create-form'); // получение формы по id
 
       var data = Object.fromEntries(new FormData(form).entries()); // извлечение данных из формы и преобразование в объект
 
-      this.$store.dispatch('create_' + this.class_name.slice(0, -1), data).then(function (res) {
-        return micromodal__WEBPACK_IMPORTED_MODULE_0__.default.close('modal_append_client');
-      }); // вызов запроса на добавление сущности в зависимости this.class_name
+      this.$store.dispatch('create_' + this.class_name.slice(0, -1), data).then(function () {
+        _this.$message('Вы добавили запись!');
 
+        micromodal__WEBPACK_IMPORTED_MODULE_0__.default.close('modal_append_client');
+      });
       document.querySelector('#create-form').reset();
     }
   }
@@ -2489,6 +2493,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 
 
@@ -2618,6 +2626,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+console.log("http://localhost:8000");
+(axios__WEBPACK_IMPORTED_MODULE_18___default().defaults.baseURL) = "http://localhost:8000";
 vue__WEBPACK_IMPORTED_MODULE_20__.default.prototype.$Cookies = (js_cookie__WEBPACK_IMPORTED_MODULE_1___default());
 
 vue__WEBPACK_IMPORTED_MODULE_20__.default.prototype.$initials = function (str) {
@@ -2971,7 +2981,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
 /* harmony import */ var _router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../router */ "./resources/js/router/index.js");
 
 
@@ -2979,78 +2988,62 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   state: {
     token: localStorage.getItem('user-token') || "",
-    authUser: {},
-    status: "",
-    hasLoadedOnce: false
+    user: {}
   },
   getters: {
-    authUser: function authUser(state) {
-      return state.authUser;
+    user: function user(state) {
+      return state.user;
     },
     isAuthenticated: function isAuthenticated(state) {
       return !!state.token;
-    },
-    authStatus: function authStatus(state) {
-      return state.status;
     }
   },
   actions: {
-    update_authUser: function update_authUser(_ref, credentials) {
-      var _this = this;
-
+    update_user: function update_user(_ref, credentials) {
       var dispatch = _ref.dispatch,
           commit = _ref.commit;
       return new Promise(function (resolve, reject) {
-        axios__WEBPACK_IMPORTED_MODULE_0___default().patch('/api/update_profile', credentials, {
-          headers: {
-            "Content-Type": "application/json"
-          }
-        }).then(function (res) {
-          _this.getters.authUser.username = credentials.username;
-          _this.getters.authUser.email = credentials.email;
+        axios__WEBPACK_IMPORTED_MODULE_0___default().patch('/api/update_profile', credentials).then(function (res) {
+          commit('update_user', credentials);
           resolve();
         })["catch"](function (err) {
           reject();
         });
       });
     },
-    auth_success: function auth_success(_ref2, data) {
+    set_user: function set_user(_ref2, user) {
       var commit = _ref2.commit;
-      commit('auth_success', data);
+      return new Promise(function (resolve) {
+        commit('set_user', user);
+        resolve();
+      });
     },
     auth_logout: function auth_logout(_ref3) {
       var commit = _ref3.commit;
       return new Promise(function (resolve) {
         commit('clear_local_receipt_product_offers');
         commit('clear_client_local_receipt');
-        commit('auth_logout');
+        commit('clear_user');
         resolve();
       });
     }
   },
   mutations: {
-    auth_request: function auth_request(state) {
-      state.status = "loading";
+    set_user: function set_user(state, user) {
+      state.token = user.api_token;
+      state.user = user;
+      localStorage.setItem('user-token', user.api_token);
+      (axios__WEBPACK_IMPORTED_MODULE_0___default().defaults.headers.common.Authorization) = 'Bearer ' + user.api_token;
     },
-    auth_success: function auth_success(state, response) {
-      state.status = "success";
-      state.token = response.token;
-      state.hasLoadedOnce = true;
-      state.authUser = response.user;
+    update_user: function update_user(state, data) {
+      state.user.username = data.username;
+      state.user.email = data.email;
     },
-    auth_error: function auth_error(state) {
-      state.status = "error";
-      state.hasLoadedOnce = true;
-    },
-    auth_logout: function auth_logout(state) {
+    clear_user: function clear_user(state) {
       state.token = "";
-      state.authUser = {};
-      state.status = "";
-      state.hasLoadedOnce = false;
+      state.user = {};
       delete (axios__WEBPACK_IMPORTED_MODULE_0___default().defaults.headers.common.Authorization);
       localStorage.removeItem('user-token');
-      vue__WEBPACK_IMPORTED_MODULE_2__.default.delete(state, "profile");
-      _router__WEBPACK_IMPORTED_MODULE_1__.default.push('/login');
     }
   }
 });
@@ -3143,15 +3136,14 @@ __webpack_require__.r(__webpack_exports__);
     create_client: function create_client(_ref2, data) {
       var dispatch = _ref2.dispatch,
           commit = _ref2.commit;
-      data.created_at = 'calculating';
+      data.created_at = new Date();
       data.code = 'C-XXXXXXXX';
       commit('init_client', data);
       return new Promise(function (resolve, reject) {
         axios__WEBPACK_IMPORTED_MODULE_0___default().post('/api/clients', data).then(function (res) {
           commit('add_client', {
             data: data,
-            code: res.data.response.code,
-            created_at: res.data.response.created_at
+            code: res.data.response.code
           });
           resolve();
         })["catch"](function (err) {
@@ -3198,22 +3190,13 @@ __webpack_require__.r(__webpack_exports__);
     },
     add_client: function add_client(state, _ref6) {
       var data = _ref6.data,
-          code = _ref6.code,
-          created_at = _ref6.created_at;
+          code = _ref6.code;
       var client = state.clients.find(function (c) {
         return c === data;
       });
       client.code = code;
-      _store__WEBPACK_IMPORTED_MODULE_1__.default.dispatch('convert_date', created_at).then(function (res) {
-        return client.created_at = res;
-      });
     },
     set_clients: function set_clients(state, clients) {
-      clients.forEach(function (item) {
-        _store__WEBPACK_IMPORTED_MODULE_1__.default.dispatch('convert_date', item.created_at).then(function (res) {
-          return item.created_at = res;
-        });
-      });
       state.clients = clients;
     },
     delete_client: function delete_client(state, id) {
@@ -3402,13 +3385,6 @@ vue__WEBPACK_IMPORTED_MODULE_13__.default.use(vuex__WEBPACK_IMPORTED_MODULE_14__
           return reject();
         });
       });
-    },
-    convert_date: function convert_date(_ref2, dateString) {
-      var commit = _ref2.commit;
-      // return new Promise ((resolve, reject) => {
-      var date = new Date(Date.parse(dateString));
-      var months = ["января", "февраля", "марта", "апреля", "мая", "июня", "июля", "августа", "сентября", "октября", "ноября", "декабря"];
-      return "".concat(date.getDate(), " ").concat(months[date.getMonth()], " (").concat(date.getFullYear() % 1000, "\u0433.)"); // })
     },
     micromodal_init: function micromodal_init() {
       MicroModal.init((_configs_show_init__WEBPACK_IMPORTED_MODULE_11___default()));
@@ -3688,14 +3664,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     create_product: function create_product(_ref4, dataC) {
       var commit = _ref4.commit;
-      dataC.created_at = 'calculating';
+      dataC.created_at = new Date();
       dataC.sold_month = 0;
       commit('init_product', dataC);
       return new Promise(function (resolve, reject) {
         axios__WEBPACK_IMPORTED_MODULE_0___default().post('/api/products', dataC).then(function (res) {
-          commit('update_product', _objectSpread(_objectSpread({}, dataC), {}, {
-            created_at: res.data.response.created_at
-          }));
+          commit('update_product', _objectSpread({}, dataC));
           resolve();
         })["catch"](function (err) {
           reject(err);
@@ -3717,9 +3691,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         product.title = data.title;
         product.count = data.count;
         product.price = data.price;
-        _store__WEBPACK_IMPORTED_MODULE_1__.default.dispatch('convert_date', data.created_at).then(function (res) {
-          return product.created_at = res;
-        });
       }
     },
     delete_product: function delete_product(state, id) {
@@ -3728,11 +3699,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       });
     },
     set_products: function set_products(state, products) {
-      products.forEach(function (product) {
-        return _store__WEBPACK_IMPORTED_MODULE_1__.default.dispatch('convert_date', product.created_at).then(function (res) {
-          return product.created_at = res;
-        });
-      });
       state.products = products;
     },
     init_product: function init_product(state, product) {
@@ -3799,32 +3765,15 @@ __webpack_require__.r(__webpack_exports__);
   },
   mutations: {
     set_product_offers: function set_product_offers(state, product_offers) {
-      product_offers.forEach(function (product_offer) {
-        _store__WEBPACK_IMPORTED_MODULE_1__.default.dispatch('convert_date', product_offer.start_at).then(function (res) {
-          return product_offer.start_at = res;
-        });
-
-        if (product_offer.delivered_at) {
-          _store__WEBPACK_IMPORTED_MODULE_1__.default.dispatch('convert_date', product_offer.delivered_at).then(function (res) {
-            return product_offer.delivered_at = res;
-          });
-        }
-
-        _store__WEBPACK_IMPORTED_MODULE_1__.default.dispatch('convert_date', product_offer.end_at).then(function (res) {
-          return product_offer.end_at = res;
-        });
-      });
       state.product_offers = product_offers;
     },
     deliver_product_offer: function deliver_product_offer(state, _ref3) {
       var code = _ref3.code,
           date = _ref3.date;
-      var index = state.product_offers.findIndex(function (item) {
+      var product_offer = state.product_offers.find(function (item) {
         return item.code === code;
       });
-      _store__WEBPACK_IMPORTED_MODULE_1__.default.dispatch('convert_date', date).then(function (res) {
-        state.product_offers[index].delivered_at = res;
-      });
+      product_offer.delivered_at = date;
     }
   },
   getters: {
@@ -3860,9 +3809,16 @@ __webpack_require__.r(__webpack_exports__);
     receipts: []
   },
   actions: {
-    add_receipt: function add_receipt(_ref, data) {
+    issue_receipt: function issue_receipt(_ref, data) {
       var commit = _ref.commit;
-      commit('add_receipt', data);
+      return new Promise(function (resolve, reject) {
+        axios__WEBPACK_IMPORTED_MODULE_0___default().post('/api/receipts/issue', data).then(function (res) {
+          commit('add_receipt', res.data.response);
+          resolve();
+        }).then(function () {
+          return reject();
+        });
+      });
     },
     fetch_receipt: function fetch_receipt(_ref2, code) {
       var commit = _ref2.commit;
@@ -3897,16 +3853,6 @@ __webpack_require__.r(__webpack_exports__);
       var page = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
       return new Promise(function (resolve, reject) {
         axios__WEBPACK_IMPORTED_MODULE_0___default().get('/api/receipts?page=' + page).then(function (res) {
-          res.data.response.data.forEach(function (item) {
-            _store__WEBPACK_IMPORTED_MODULE_1__.default.dispatch('convert_date', item.created_at).then(function (res) {
-              return item.created_at = res;
-            });
-            item.code_client = item.client.code;
-            item.code_employee = item.employee.code;
-            item.product_offers_count = item.product_offers.length;
-            delete item.client;
-            delete item.employee;
-          });
           commit('set_receipts', res.data.response.data);
           resolve(res.data.response);
         })["catch"](function (err) {
@@ -3917,15 +3863,8 @@ __webpack_require__.r(__webpack_exports__);
   },
   mutations: {
     add_receipt: function add_receipt(state, receipt) {
-      if (receipt.sum === -1) {
-        state.receipts.unshift(receipt);
-        state.receipts.pop();
-      } else {
-        state.receipts[0].code = receipt.code;
-        state.receipts[0].code_employee = receipt.code_employee;
-        state.receipts[0].created_at = receipt.created_at;
-        state.receipts[0].sum = receipt.sum;
-      }
+      state.receipts.unshift(receipt);
+      state.receipts.pop();
     },
     pay_receipt: function pay_receipt(state, _ref5) {
       var code = _ref5.code,
@@ -24874,7 +24813,11 @@ var render = function() {
               attrs: { href: "#", "data-target": "dropdown" }
             },
             [
-              _vm._v("\n          " + _vm._s(_vm.name) + "\n          "),
+              _vm._v(
+                "\n          " +
+                  _vm._s(_vm.name ? _vm.$initials(_vm.name) : "") +
+                  "\n          "
+              ),
               _c("i", { staticClass: "material-icons right" }, [
                 _vm._v("arrow_drop_down")
               ])
@@ -25347,7 +25290,15 @@ var render = function() {
                     )
                   ])
                 ]
-              )
+              ),
+              _vm._v(" "),
+              _c("div", { staticStyle: { "text-align": "center" } }, [
+                _c("span", [_vm._v("Telegram: @ramazon_sangov")]),
+                _vm._v(" "),
+                _c("span", [_vm._v("Github: https://github.com/RasankRam")]),
+                _vm._v(" "),
+                _c("span", [_vm._v("VK: https://vk.com/id516636049")])
+              ])
             ],
             1
           )

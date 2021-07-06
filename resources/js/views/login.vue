@@ -63,11 +63,6 @@ export default {
     username: { required },
     password: { required, minLength: minLength(6) }
   },
-  computed: {
-    // error_section () {
-    //   return this.username.trim().length < 7 ? "Имя пользователя должно быть длиннее 6 символов" : ''
-    // },
-  },
   mounted() {
     if (messages[this.$route.query.message]) {
       this.$message(localizeFilter(messages[this.$route.query.message]))
@@ -88,12 +83,9 @@ export default {
       }
 
       axios.post('/api/login', formData).then(res => {
-        const data = res.data.response
-
-        localStorage.setItem('user-token', data.token)
-        axios.defaults.headers.common['Authorization'] = 'Bearer ' + data.token
-        this.$store.dispatch('auth_success', data)
-        router.push('/')
+        this.$store.dispatch('set_user',res.data.response).then(() => {
+          this.$router.push('/')
+        })
       }).catch(err => {
         this.$message('Неправильный логин/или пароль')
         localStorage.removeItem("user-token")

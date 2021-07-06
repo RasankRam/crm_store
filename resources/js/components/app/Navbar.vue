@@ -15,7 +15,7 @@
       <ul class="right hide-on-small-and-down">
         <li>
           <a class="dropdown-trigger black-text" href="#" data-target="dropdown" ref="dropdown">
-            {{name}}
+            {{name ? $initials(name) : ''}}
             <i class="material-icons right">arrow_drop_down</i>
           </a>
 
@@ -41,7 +41,6 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
 
 export default {
   data: () => ({
@@ -56,15 +55,12 @@ export default {
   },
   computed: {
     name() {
-      return this.$initials(this.$store.getters.authUser.name)
+      return this.$store.getters.user.name
     }
   },
   mounted() {
     let elems = document.querySelectorAll('.sidenav');
     let instances = M.Sidenav.init(elems);
-    this.interval = setInterval(() => {
-      this.date = new Date()
-    }, 1000)
     this.dropdown = M.Dropdown.init(this.$refs.dropdown, {
       constrainWidth: false
     })

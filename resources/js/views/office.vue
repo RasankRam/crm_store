@@ -16,6 +16,7 @@
 
 
       <Paginate
+        v-if="res.meta.last_page !== 1"
         v-model="page"
         :page-count="pageCount"
         :margin-pages="2"

@@ -91,12 +91,12 @@ export default {
     },
   },
   computed: {
-    ...mapGetters(['authUser'])
+    ...mapGetters(['user'])
   },
   mounted() {
-    this.username = this.authUser.username
-    this.email = this.authUser.email
-    this.is_english = this.authUser.is_english
+    this.username = this.user.username
+    this.email = this.user.email
+    this.is_english = this.user.is_english
 
     setTimeout(() => M.updateTextFields(), 0)
   },

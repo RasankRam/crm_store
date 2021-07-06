@@ -34,22 +34,14 @@ export default {
   mutations: {
 
     set_product_offers(state, product_offers) {
-      product_offers.forEach(product_offer => {
-        store.dispatch('convert_date', product_offer.start_at).then(res=>product_offer.start_at=res)
-        if (product_offer.delivered_at) {
-          store.dispatch('convert_date', product_offer.delivered_at).then(res => product_offer.delivered_at = res)
-        }
-        store.dispatch('convert_date', product_offer.end_at).then(res=>product_offer.end_at=res)
-      })
       state.product_offers = product_offers
     },
 
     deliver_product_offer(state, { code, date }) {
 
-      const index = state.product_offers.findIndex(item => item.code === code)
-      store.dispatch('convert_date', date).then(res => {
-        state.product_offers[index].delivered_at=res
-      })
+      const product_offer = state.product_offers.find(item => item.code === code)
+      product_offer.delivered_at = date
+
     }
 
   },

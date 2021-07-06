@@ -16,6 +16,7 @@ class Pickup_pointCollection extends ResourceCollection
   {
     $total = $this->total();
     $current_page = $this->currentPage();
+    $per_page = $this->perPage();
     return [
       'data' => $this->collection,
       'links' => [
@@ -27,8 +28,8 @@ class Pickup_pointCollection extends ResourceCollection
       'meta' => [
         'current_page' => $current_page,
         'from' => $current_page,
-        'last_page' => ceil($total/3),
-        'per_page' => 3,
+        'last_page' => ceil($total/$per_page),
+        'per_page' => $per_page,
         'to' => $current_page + 1,
         'total' => $total,
       ],

@@ -50,6 +50,10 @@ import router from "./router"
 import axios from 'axios'
 import pagination from 'laravel-vue-pagination'
 
+console.log(process.env.MIX_APP_URL)
+
+axios.defaults.baseURL = process.env.MIX_APP_URL
+
 Vue.prototype.$Cookies = Cookies;
 Vue.prototype.$initials = function (str) {
     return str.split(/\s+/).map((w,i) => i ? w.substring(0,1).toUpperCase() + '.' : w).join(' ')

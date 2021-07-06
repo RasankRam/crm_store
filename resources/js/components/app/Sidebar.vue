@@ -31,8 +31,12 @@
     }),
     methods: {
       reset() {
-        this.$store.dispatch('auth_logout')
-        axios.get('/api/reset')
+        this.$store.dispatch('auth_logout').then(() => {
+          axios.get('/api/reset')
+          this.$message('Вы успешно сбросили проект в начальное состояние!')
+          this.$router.push('/login')
+          }
+        )
       }
     }
   }

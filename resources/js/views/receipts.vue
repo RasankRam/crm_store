@@ -16,13 +16,13 @@
     </ul>
   </div>
 
-  <carousel style="min-height:212px;" :product_offers="product_offers" />
+  <carousel style="min-height:212px;" />
 
   <div style="justify-content:flex-start" class="page-title">
     <span style="font-size:21px;">Итого:</span>
     <span style="color: rgb(102, 106, 115);font-weight: bold;font-size: 21px;margin-left: 23px;
     margin-right: 18px;width: 167px;text-align: center;display: inline-block;">{{ this.total_price }}&nbsp;₽</span>
-    <beauty_button @issue_receipt="issue_receipt" v-if="product_offers.length !== 0" :text="'Оформить'" />
+    <beauty_button @issue_receipt="issue_receipt" v-if="this.$store.getters.local_receipt_product_offers.length !== 0" :text="'Оформить'" />
   </div>
   <Loader v-if="loading" />
 
@@ -32,8 +32,9 @@
 
   <div v-else>
 
-    <receipts_table @pay_receipt="pay_receipt" :receipts="receipts" />
+    <receipts_table @pay_receipt="pay_receipt" />
     <Paginate
+      v-if="res.meta.last_page !== 1"
       v-model="page"
       :page-count="pageCount"
       :margin-pages="2"
@@ -84,16 +85,13 @@ export default {
       return this.$store.getters.receipts
     },
 
+
     pageSize() {
       return this.res.meta.per_page
     },
 
     pageCount() {
       return this.res.meta.last_page
-    },
-
-    product_offers() {
-      return this.$store.getters.local_receipt_product_offers
     },
 
     total_price() {
@@ -180,30 +178,13 @@ export default {
 
     issue_receipt() {
       let data = {}
-      data.id_client = this.$store.getters.local_receipt_client.id
-
       data.product_offers = this.$store.getters.local_receipt_product_offers
-
-      data.product_offers_count = data.product_offers.length
       data.code_client = this.$store.getters.local_receipt_client.code
-      data.code = 'R-00000000'
-      data.created_at = 'calculating'
-      data.sum = -1
-      data.payment_code = null
 
-
-      this.$store.dispatch('add_receipt', data)
-
-      axios.post('/api/receipts/issue', data).then((res) => {
-        data.code = res.data.response.code
-        data.sum = res.data.response.sum
-        data.code_client = res.data.response.code_client
-        data.code_employee = res.data.response.code_employee
-        data.created_at = this.convert_date(res.data.response.created_at)
-        this.$store.dispatch('add_receipt',data)
+      this.$store.dispatch('issue_receipt', data).then(() => {
         this.$store.dispatch('clear_local_receipt_product_offers')
-        this.$message('Квитанция успешно оформлена')
-      }).catch(err => console.log(err))
+        this.$message('Квитанция оформлена!')
+      }).catch(() => this.$message('Не удалось оформить квитанцию'))
     }
 
   },

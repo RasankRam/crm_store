@@ -10,6 +10,7 @@
     <div v-else>
       <pickup_points_table :pickup_points="pickup_points" />
       <Paginate
+        v-if="res.meta.last_page !== 1"
         v-model="page"
         :page-count="pageCount"
         :margin-pages="2"
@@ -47,6 +48,7 @@ export default {
     pickup_points() {
       return this.$store.getters.pickup_points
     },
+
     pageSize() {
       return this.res.meta.per_page
     },

@@ -32,7 +32,7 @@
               </div>
             <div class="row">
               <div class="input-field col s12">
-                <input v-model.trim="count" :class="{invalid: ($v.count.$dirty && !$v.count.required)}" placeholder="5" id="count" name="count" type="text" class="validate">
+                <input v-model.trim="count" :class="{invalid: ($v.count.$dirty && !$v.count.required)}" placeholder="В штуках" id="count" name="count" type="text" class="validate">
                 <label for="count" class="active">Введите количество</label>
                 <small class="helper-text invalid"
                        v-if="$v.count.$dirty && !$v.count.required"

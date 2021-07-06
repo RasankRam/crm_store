@@ -122,7 +122,10 @@ export default {
       const form = document.querySelector('#create-form') // получение формы по id
       const data = Object.fromEntries(new FormData(form).entries()) // извлечение данных из формы и преобразование в объект
 
-      this.$store.dispatch('create_'+this.class_name.slice(0, -1), data).then(res => MicroModal.close('modal_append_client')) // вызов запроса на добавление сущности в зависимости this.class_name
+      this.$store.dispatch('create_'+this.class_name.slice(0, -1), data).then(() => {
+        this.$message('Вы добавили запись!')
+        MicroModal.close('modal_append_client')}
+        )
 
       document.querySelector('#create-form').reset()
     }

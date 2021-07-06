@@ -19,6 +19,7 @@
       <m_delete @react_delete="react_delete" :id_bd="id_bd" :class_name="class_name"  />
       <m_edit @react_edit="react_edit" :id_bd="id_bd" :class_name="class_name" />
       <Paginate
+        v-if="res.meta.last_page !== 1"
         v-model="page"
         :page-count="pageCount"
         :margin-pages="2"

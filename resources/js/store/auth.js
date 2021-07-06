@@ -5,29 +5,22 @@ import router from "../router"
 export default {
   state: {
     token: localStorage.getItem('user-token') || "",
-    authUser: {},
-    status: "",
-    hasLoadedOnce: false
+    user: {},
   },
 
   getters: {
-    authUser: state => state.authUser,
+    user: state => state.user,
     isAuthenticated: state => !!state.token,
-    authStatus: state => state.status
   },
 
   actions: {
-    update_authUser({dispatch, commit}, credentials) {
+
+    update_user({dispatch, commit}, credentials) {
 
       return new Promise((resolve, reject) => {
-        axios.patch('/api/update_profile', credentials, {
-          headers: {
-            "Content-Type": "application/json",
-          }
-        }).then(res => {
+        axios.patch('/api/update_profile', credentials).then(res => {
 
-          this.getters.authUser.username = credentials.username
-          this.getters.authUser.email = credentials.email
+          commit('update_user', credentials)
 
           resolve()
         }).catch(err => {
@@ -36,15 +29,18 @@ export default {
       })
     },
 
-    auth_success({commit}, data) {
-      commit('auth_success', data)
+    set_user({commit}, user) {
+      return new Promise(resolve => {
+        commit('set_user', user)
+        resolve()
+      })
     },
 
     auth_logout({commit}) {
       return new Promise(resolve => {
         commit('clear_local_receipt_product_offers')
         commit('clear_client_local_receipt')
-        commit('auth_logout')
+        commit('clear_user')
         resolve()
       })
 
@@ -52,29 +48,24 @@ export default {
   },
   mutations: {
 
-    auth_request: state => {
-      state.status = "loading";
+    set_user(state, user) {
+      state.token = user.api_token
+      state.user = user
+      localStorage.setItem('user-token', user.api_token)
+      axios.defaults.headers.common['Authorization'] = 'Bearer ' + user.api_token
     },
-    auth_success: (state, response) => {
-      state.status = "success"
-      state.token = response.token
-      state.hasLoadedOnce = true
-      state.authUser = response.user
+
+    update_user(state, data) {
+      state.user.username = data.username
+      state.user.email = data.email
     },
-    auth_error: state => {
-      state.status = "error"
-      state.hasLoadedOnce = true
-    },
-    auth_logout: state => {
+
+    clear_user(state) {
       state.token = ""
-      state.authUser = {}
-      state.status = ""
-      state.hasLoadedOnce = false
+      state.user = {}
       delete axios.defaults.headers.common['Authorization']
       localStorage.removeItem('user-token')
-      Vue.delete(state, "profile")
-      router.push('/login')
-    }
+    },
 
   }
 }

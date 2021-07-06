@@ -1,6 +1,31 @@
 <template>
   <div>
-    <product_offers_table @deliver="deliver" :product_offers="product_offers" />
+
+    <Loader v-if="loading" />
+
+    <p class="center" v-else-if="!product_offers.length">
+      {{ 'NoRecords' | localize }}
+    </p>
+
+    <div v-else>
+
+      <product_offers_table :product_offers="product_offers" @deliver="deliver" />
+
+      <Paginate
+        v-if="res.meta.last_page !== 1"
+        v-model="page"
+        :page-count="pageCount"
+        :margin-pages="2"
+        :click-handler="pageChangeHandler"
+        :prev-text="'&laquo;'"
+        :next-text="'&raquo;'"
+        :container-class="'pagination'"
+        :page-class="'waves-effect'"
+        :active-class="'active_pagination'"
+      />
+
+    </div>
+
   </div>
 </template>
 
@@ -22,7 +47,7 @@ export default {
     }
   },
   mounted() {
-    this.$store.dispatch('fetch_product_offers').then((res) => {
+    this.$store.dispatch('fetch_product_offers').then(res => {
       this.res = res
       this.loading = false
     })

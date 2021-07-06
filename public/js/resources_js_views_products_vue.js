@@ -51,6 +51,8 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       axios__WEBPACK_IMPORTED_MODULE_1___default().delete("/api/".concat(this.class_name, "/").concat(this.id_bd)).then(function () {
+        _this.$message('Запись удалена!');
+
         _this.$emit('react_delete');
       });
     }
@@ -210,10 +212,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "products_table",
-  props: {
-    products: {
-      required: true,
-      type: Array
+  methods: {
+    convert_date: function convert_date(dateString) {
+      // return new Promise ((resolve, reject) => {
+      var date = new Date(Date.parse(dateString));
+      var months = ["января", "февраля", "марта", "апреля", "мая", "июня", "июля", "августа", "сентября", "октября", "ноября", "декабря"];
+      return "".concat(date.getDate(), " ").concat(months[date.getMonth()], " (").concat(date.getFullYear() % 1000, "\u0433.)"); // })
+    }
+  },
+  computed: {
+    products: function products() {
+      return this.$store.getters.products;
     }
   }
 });
@@ -234,6 +243,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_m_delete__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../components/m_delete */ "./resources/js/components/m_delete.vue");
 /* harmony import */ var _components_m_edit__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/m_edit */ "./resources/js/components/m_edit.vue");
 /* harmony import */ var _components_tables_products_table__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/tables/products_table */ "./resources/js/components/tables/products_table.vue");
+//
 //
 //
 //
@@ -979,7 +989,7 @@ var render = function() {
             _vm._v(" "),
             _c("td", [_vm._v(_vm._s(product.sold_month))]),
             _vm._v(" "),
-            _c("td", [_vm._v(_vm._s(product.created_at))]),
+            _c("td", [_vm._v(_vm._s(_vm.convert_date(product.created_at)))]),
             _vm._v(" "),
             _c("td", { staticStyle: { width: "107px" } }, [
               _c(
@@ -1087,25 +1097,27 @@ var render = function() {
                 on: { react_edit: _vm.react_edit }
               }),
               _vm._v(" "),
-              _c("Paginate", {
-                attrs: {
-                  "page-count": _vm.pageCount,
-                  "margin-pages": 2,
-                  "click-handler": _vm.pageChangeHandler,
-                  "prev-text": "&laquo;",
-                  "next-text": "&raquo;",
-                  "container-class": "pagination",
-                  "page-class": "waves-effect",
-                  "active-class": "active_pagination"
-                },
-                model: {
-                  value: _vm.page,
-                  callback: function($$v) {
-                    _vm.page = $$v
-                  },
-                  expression: "page"
-                }
-              })
+              _vm.res.meta.last_page !== 1
+                ? _c("Paginate", {
+                    attrs: {
+                      "page-count": _vm.pageCount,
+                      "margin-pages": 2,
+                      "click-handler": _vm.pageChangeHandler,
+                      "prev-text": "&laquo;",
+                      "next-text": "&raquo;",
+                      "container-class": "pagination",
+                      "page-class": "waves-effect",
+                      "active-class": "active_pagination"
+                    },
+                    model: {
+                      value: _vm.page,
+                      callback: function($$v) {
+                        _vm.page = $$v
+                      },
+                      expression: "page"
+                    }
+                  })
+                : _vm._e()
             ],
             1
           ),

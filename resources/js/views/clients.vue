@@ -11,6 +11,7 @@
     <clients_table @edit="edit" @del="del" :clients="clients"/>
     <m_delete @react_delete="react_delete" :class_name="class_name" :id_bd="id_bd" />
     <Paginate
+      v-if="res.meta.last_page !== 1"
       v-model="page"
       :page-count="pageCount"
       :margin-pages="2"

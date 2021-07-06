@@ -18,7 +18,7 @@
       <td>{{client.code}}</td>
       <td>{{client.name}}</td>
       <td>{{client.email}}</td>
-      <td>{{client.created_at}}</td>
+      <td>{{convert_date(client.created_at)}}</td>
       <td style="width: 107px;">
         <button @click="$emit('edit', client.id)" data-micromodal-trigger="modal_edit" class="btn btn-manage-round">
           <i style="cursor:pointer" class="small pencil material-icons">mode_edit</i>
@@ -42,6 +42,33 @@ export default {
       type: Array
     }
   },
+  methods: {
+
+    convert_date(dateString) {
+      // return new Promise ((resolve, reject) => {
+      const date = new Date(Date.parse(dateString));
+      const months = [
+        "января",
+        "февраля",
+        "марта",
+        "апреля",
+        "мая",
+        "июня",
+        "июля",
+        "августа",
+        "сентября",
+        "октября",
+        "ноября",
+        "декабря"
+      ];
+      return `${date.getDate()} ${months[date.getMonth()]} (${
+        date.getFullYear() % 1000
+      }г.)`
+      // })
+    },
+
+  }
+
 }
 </script>
 

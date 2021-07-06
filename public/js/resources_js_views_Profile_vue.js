@@ -122,11 +122,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       sameAsPassword: (0,vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__.sameAs)('password')
     }
   },
-  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapGetters)(['authUser'])),
+  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapGetters)(['user'])),
   mounted: function mounted() {
-    this.username = this.authUser.username;
-    this.email = this.authUser.email;
-    this.is_english = this.authUser.is_english;
+    this.username = this.user.username;
+    this.email = this.user.email;
+    this.is_english = this.user.is_english;
     setTimeout(function () {
       return M.updateTextFields();
     }, 0);

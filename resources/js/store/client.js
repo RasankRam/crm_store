@@ -19,13 +19,13 @@ export default {
 
     create_client({dispatch, commit}, data) {
 
-      data.created_at = 'calculating'
+      data.created_at = new Date()
       data.code = 'C-XXXXXXXX'
       commit('init_client', data)
 
       return new Promise ( (resolve, reject) => {
         axios.post('/api/clients', data).then((res) => {
-          commit('add_client', {data, code: res.data.response.code, created_at : res.data.response.created_at})
+          commit('add_client', {data, code: res.data.response.code })
           resolve()
         }).catch(err => { reject() } )
       })
@@ -67,17 +67,12 @@ export default {
       state.clients.unshift(client)
     },
 
-    add_client(state, {data, code, created_at}) {
+    add_client(state, {data, code}) {
       const client = state.clients.find(c => c === data)
-
       client.code = code
-      store.dispatch('convert_date', created_at).then(res => client.created_at = res)
     },
 
     set_clients(state, clients) {
-      clients.forEach(item => {
-        store.dispatch('convert_date', item.created_at).then(res => item.created_at = res)
-      })
       state.clients = clients
     },
 

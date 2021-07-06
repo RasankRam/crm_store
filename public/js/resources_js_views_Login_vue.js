@@ -87,10 +87,6 @@ __webpack_require__.r(__webpack_exports__);
       minLength: (0,vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_4__.minLength)(6)
     }
   },
-  computed: {// error_section () {
-    //   return this.username.trim().length < 7 ? "Имя пользователя должно быть длиннее 6 символов" : ''
-    // },
-  },
   mounted: function mounted() {
     if (_utils_messages__WEBPACK_IMPORTED_MODULE_0__.default[this.$route.query.message]) {
       this.$message((0,_filters_localize_filter__WEBPACK_IMPORTED_MODULE_1__.default)(_utils_messages__WEBPACK_IMPORTED_MODULE_0__.default[this.$route.query.message]));
@@ -113,13 +109,9 @@ __webpack_require__.r(__webpack_exports__);
         password: this.password
       };
       axios__WEBPACK_IMPORTED_MODULE_2___default().post('/api/login', formData).then(function (res) {
-        var data = res.data.response;
-        localStorage.setItem('user-token', data.token);
-        (axios__WEBPACK_IMPORTED_MODULE_2___default().defaults.headers.common.Authorization) = 'Bearer ' + data.token;
-
-        _this.$store.dispatch('auth_success', data);
-
-        _router__WEBPACK_IMPORTED_MODULE_3__.default.push('/');
+        _this.$store.dispatch('set_user', res.data.response).then(function () {
+          _this.$router.push('/');
+        });
       })["catch"](function (err) {
         _this.$message('Неправильный логин/или пароль');
 

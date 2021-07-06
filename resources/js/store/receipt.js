@@ -9,8 +9,15 @@ export default {
 
   actions: {
 
-    add_receipt({ commit }, data) {
-      commit('add_receipt', data)
+    issue_receipt({commit}, data) {
+
+      return new Promise((resolve, reject) => {
+        axios.post('/api/receipts/issue', data).then(res => {
+          commit('add_receipt', res.data.response)
+          resolve()
+        }).then(() => reject())
+      })
+
     },
 
     fetch_receipt({commit}, code) {
@@ -39,18 +46,6 @@ export default {
       return new Promise ((resolve, reject) =>
       {
         axios.get('/api/receipts?page=' + page).then((res) => {
-
-          res.data.response.data.forEach(item => {
-
-            store.dispatch('convert_date', item.created_at).then(res => item.created_at = res)
-            item.code_client = item.client.code
-            item.code_employee = item.employee.code
-            item.product_offers_count = item.product_offers.length
-
-            delete item.client
-            delete item.employee
-
-          })
           commit('set_receipts', res.data.response.data)
           resolve(res.data.response)
         }).catch(err => reject(err) )
@@ -63,15 +58,8 @@ export default {
   mutations: {
 
     add_receipt(state, receipt) {
-      if (receipt.sum === -1) {
-        state.receipts.unshift(receipt)
-        state.receipts.pop()
-      } else {
-        state.receipts[0].code = receipt.code
-        state.receipts[0].code_employee = receipt.code_employee
-        state.receipts[0].created_at = receipt.created_at
-        state.receipts[0].sum = receipt.sum
-      }
+      state.receipts.unshift(receipt)
+      state.receipts.pop()
     },
 
     pay_receipt(state, { code, payment_code }) {

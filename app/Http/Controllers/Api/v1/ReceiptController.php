@@ -8,6 +8,7 @@ use App\Http\Resources\Product;
 use App\Http\Resources\ReceiptCollection;
 use App\Http\Resources\SubscriptionCollection;
 use App\Http\Resources\Receipt as ReceiptResource;
+use App\Models\Client;
 use App\Models\ProductOffer;
 use App\Models\Receipt;
 use App\Models\Subscription;
@@ -38,10 +39,10 @@ class ReceiptController extends Controller
     public function issue(Request $request) {
 
 
-      $request_data = $request->only(['id_client', 'product_offers']);
+      $request_data = $request->only(['code_client', 'product_offers']);
 
       $validator = Validator::make($request_data, [
-        "id_client" => "required|numeric",
+        "code_client" => "required",
         "product_offers" => "required",
       ]);
 
@@ -50,6 +51,15 @@ class ReceiptController extends Controller
           "status" => false,
           "errors" => $validator->messages()
         ], 422);
+      }
+
+      $client = Client::where('code',$request->code_client)->first();
+
+      if (!$client) {
+        return response()->json([
+          "status" => false,
+          "error" => 'Client not found',
+        ], 404);
       }
 
       foreach ($request->product_offers as $product_offer) {
@@ -75,10 +85,10 @@ class ReceiptController extends Controller
       $receipt = Receipt::create([
         'code' => $code,
         'id_employee' => AppHelper::check_employee()->id,
-        'id_client' => $request->id_client
+        'id_client' => $client->id
       ]);
 
-      // subscriptions
+      // product_offers
       foreach ($request->product_offers as $product_offer) {
         $product_offer = (object) $product_offer;
 
@@ -106,15 +116,11 @@ class ReceiptController extends Controller
 
       $receipt->save();
 
+      $receipt = Receipt::where('id', $receipt->id)->with('product_offers', 'employee', 'client')->first();
+
       return response()->json([
         "status" => true,
-        "response" => [
-          'code_employee' => AppHelper::check_employee()->code,
-          'code_client' => $receipt->client->code,
-          'code' => $receipt->code,
-          'created_at' => $receipt->created_at,
-          'sum' => $receipt->sum
-        ],
+        "response" => new ReceiptResource($receipt),
       ]);
 
     }

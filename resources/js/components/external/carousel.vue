@@ -39,7 +39,6 @@
 <script>
 export default {
   name: "carousel",
-  props: ['product_offers'],
   data() {
     return {
       currentOffset: 0,
@@ -48,6 +47,10 @@ export default {
     }
   },
   computed: {
+
+    product_offers() {
+      return this.$store.getters.local_receipt_product_offers
+    },
 
     atEndOfList() {
       return this.currentOffset <= (this.paginationFactor * -1) * (this.product_offers.length - this.windowSize);

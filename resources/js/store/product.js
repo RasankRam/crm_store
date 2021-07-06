@@ -44,7 +44,7 @@ export default {
 
     create_product({ commit }, dataC) {
 
-      dataC.created_at = 'calculating'
+      dataC.created_at = new Date()
       dataC.sold_month = 0
       commit('init_product', dataC)
       return new Promise ( (resolve, reject) => {
@@ -52,7 +52,7 @@ export default {
         axios.post('/api/products', dataC).then((res) => {
 
 
-          commit('update_product', { ...dataC, created_at: res.data.response.created_at })
+          commit('update_product', { ...dataC })
 
 
           resolve()
@@ -76,7 +76,6 @@ export default {
         product.title = data.title
         product.count = data.count
         product.price = data.price
-        store.dispatch('convert_date', data.created_at).then(res => product.created_at = res)
       }
     },
 
@@ -85,7 +84,6 @@ export default {
     },
 
     set_products(state, products) {
-      products.forEach(product => store.dispatch('convert_date', product.created_at).then(res=>product.created_at=res))
       state.products = products
     },
 

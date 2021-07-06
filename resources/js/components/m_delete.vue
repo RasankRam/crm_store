@@ -35,7 +35,7 @@ export default {
   methods: {
     del() {
       axios.delete(`/api/${this.class_name}/${this.id_bd}`).then(() => {
-
+        this.$message('Запись удалена!')
         this.$emit('react_delete')
       })
     }

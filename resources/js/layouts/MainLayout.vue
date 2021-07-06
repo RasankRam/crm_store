@@ -14,7 +14,11 @@
           </div>
         </div>
       </main>
-
+      <div style="text-align:center">
+        <span>Telegram: @ramazon_sangov</span>
+        <span>Github: https://github.com/RasankRam</span>
+        <span>VK: https://vk.com/id516636049</span>
+      </div>
     </div>
   </div>
 </template>
@@ -34,6 +38,7 @@ export default {
   }),
   mounted() {
     this.loading = false
+
   },
   components: {
     error_message,

@@ -51,6 +51,8 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       axios__WEBPACK_IMPORTED_MODULE_1___default().delete("/api/".concat(this.class_name, "/").concat(this.id_bd)).then(function () {
+        _this.$message('Запись удалена!');
+
         _this.$emit('react_delete');
       });
     }
@@ -210,6 +212,14 @@ __webpack_require__.r(__webpack_exports__);
       required: true,
       type: Array
     }
+  },
+  methods: {
+    convert_date: function convert_date(dateString) {
+      // return new Promise ((resolve, reject) => {
+      var date = new Date(Date.parse(dateString));
+      var months = ["января", "февраля", "марта", "апреля", "мая", "июня", "июля", "августа", "сентября", "октября", "ноября", "декабря"];
+      return "".concat(date.getDate(), " ").concat(months[date.getMonth()], " (").concat(date.getFullYear() % 1000, "\u0433.)"); // })
+    }
   }
 });
 
@@ -238,6 +248,7 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+//
 //
 //
 //
@@ -986,7 +997,7 @@ var render = function() {
           _vm._v(" "),
           _c("td", [_vm._v(_vm._s(client.email))]),
           _vm._v(" "),
-          _c("td", [_vm._v(_vm._s(client.created_at))]),
+          _c("td", [_vm._v(_vm._s(_vm.convert_date(client.created_at)))]),
           _vm._v(" "),
           _c("td", { staticStyle: { width: "107px" } }, [
             _c(
@@ -1086,25 +1097,27 @@ var render = function() {
                 on: { react_delete: _vm.react_delete }
               }),
               _vm._v(" "),
-              _c("Paginate", {
-                attrs: {
-                  "page-count": _vm.pageCount,
-                  "margin-pages": 2,
-                  "click-handler": _vm.pageChangeHandler,
-                  "prev-text": "&laquo;",
-                  "next-text": "&raquo;",
-                  "container-class": "pagination",
-                  "page-class": "waves-effect",
-                  "active-class": "active_pagination"
-                },
-                model: {
-                  value: _vm.page,
-                  callback: function($$v) {
-                    _vm.page = $$v
-                  },
-                  expression: "page"
-                }
-              })
+              _vm.res.meta.last_page !== 1
+                ? _c("Paginate", {
+                    attrs: {
+                      "page-count": _vm.pageCount,
+                      "margin-pages": 2,
+                      "click-handler": _vm.pageChangeHandler,
+                      "prev-text": "&laquo;",
+                      "next-text": "&raquo;",
+                      "container-class": "pagination",
+                      "page-class": "waves-effect",
+                      "active-class": "active_pagination"
+                    },
+                    model: {
+                      value: _vm.page,
+                      callback: function($$v) {
+                        _vm.page = $$v
+                      },
+                      expression: "page"
+                    }
+                  })
+                : _vm._e()
             ],
             1
           ),

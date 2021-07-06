@@ -28,7 +28,7 @@ class EmployeeController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Зарегистрироваться
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\JsonResponse
@@ -75,6 +75,12 @@ class EmployeeController extends Controller
         ])->setStatusCode(201,"Employee has been created");
     }
 
+  /**
+   * Авторизоваться
+   * @param Request $request
+   * @return \Illuminate\Http\JsonResponse|object
+   */
+
     public function login(Request $request) {
         $employee = Employee::where('username',$request->username)->first();
 
@@ -92,16 +98,8 @@ class EmployeeController extends Controller
 
             return response()->json([
                 "status" => true,
-                "response" => [
-                    "token" => $api_token,
-                    "user" => [
-                      "name" => $employee->name,
-                      "username" => $employee->username,
-                      "email" => $employee->email,
-                      "is_english" => $employee->is_english
-                    ]
-                ],
-            ],200);
+                "response" => $employee
+            ]);
         } else {
             return response()->json([
                 "status" => false,

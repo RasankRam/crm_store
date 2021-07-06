@@ -36,7 +36,6 @@ class Employee extends Authenticatable
      */
     protected $hidden = [
         'password',
-        'api_token',
     ];
 
     public function receipts() {

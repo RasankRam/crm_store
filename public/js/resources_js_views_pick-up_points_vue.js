@@ -30,8 +30,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "pick-up_points_table",
   props: ["pickup_points"]
@@ -51,6 +49,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _components_tables_pick_up_points_table__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../components/tables/pick-up_points_table */ "./resources/js/components/tables/pick-up_points_table.vue");
+//
 //
 //
 //
@@ -299,8 +298,6 @@ var render = function() {
       "tbody",
       _vm._l(_vm.pickup_points, function(pickup_point, index) {
         return _c("tr", { key: pickup_point.address }, [
-          _c("td", [_vm._v(_vm._s(index + 1))]),
-          _vm._v(" "),
           _c("td", [_vm._v(_vm._s(pickup_point.address))]),
           _vm._v(" "),
           _c("td", [_vm._v(_vm._s(pickup_point.hours))])
@@ -317,8 +314,6 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("thead", [
       _c("tr", [
-        _c("th"),
-        _vm._v(" "),
         _c("th", [_vm._v("Адрес")]),
         _vm._v(" "),
         _c("th", [_vm._v("Часы работы")]),
@@ -368,25 +363,27 @@ var render = function() {
                 attrs: { pickup_points: _vm.pickup_points }
               }),
               _vm._v(" "),
-              _c("Paginate", {
-                attrs: {
-                  "page-count": _vm.pageCount,
-                  "margin-pages": 2,
-                  "click-handler": _vm.pageChangeHandler,
-                  "prev-text": "&laquo;",
-                  "next-text": "&raquo;",
-                  "container-class": "pagination",
-                  "page-class": "waves-effect",
-                  "active-class": "active_pagination"
-                },
-                model: {
-                  value: _vm.page,
-                  callback: function($$v) {
-                    _vm.page = $$v
-                  },
-                  expression: "page"
-                }
-              })
+              _vm.res.meta.last_page !== 1
+                ? _c("Paginate", {
+                    attrs: {
+                      "page-count": _vm.pageCount,
+                      "margin-pages": 2,
+                      "click-handler": _vm.pageChangeHandler,
+                      "prev-text": "&laquo;",
+                      "next-text": "&raquo;",
+                      "container-class": "pagination",
+                      "page-class": "waves-effect",
+                      "active-class": "active_pagination"
+                    },
+                    model: {
+                      value: _vm.page,
+                      callback: function($$v) {
+                        _vm.page = $$v
+                      },
+                      expression: "page"
+                    }
+                  })
+                : _vm._e()
             ],
             1
           )

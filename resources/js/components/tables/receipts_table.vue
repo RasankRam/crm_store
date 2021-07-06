@@ -13,18 +13,18 @@
     <tbody>
     <tr v-for="receipt in receipts" :key="receipt.code">
       <td>{{receipt.code}}</td>
-      <td>{{receipt.code_employee}}</td>
-      <td>{{receipt.code_client}}</td>
-      <td>{{receipt.created_at}}</td>
+      <td>{{receipt.employee.code}}</td>
+      <td>{{receipt.client.code}}</td>
+      <td>{{convert_date(receipt.created_at)}}</td>
       <td style="position:relative;">
         <span data-position="top" style="font-weight:700;padding:0 5px;color:#0b4975">{{receipt.sum}} ₽</span>
 
-        <span v-if="receipt.product_offers_count" data-position='top' v-tooltip.noloc="(function(){return receipt.product_offers.reduce((carry, item) =>
+        <span v-if="receipt.product_offers.length" data-position='top' v-tooltip.noloc="(function(){return receipt.product_offers.reduce((carry, item) =>
          { return carry + item.product.title + ` ${item.product.price}₽x${item.count}=${item.product.price*item.count}` + '<br>'},'')}())"
-              :style="receipt.product_offers_count ? 'border-bottom:1px solid orangered' : 'border:none'">
+              :style="receipt.product_offers.length ? 'border-bottom:1px solid orangered' : 'border:none'">
               <!--style="/*position:absolute;left:-109px;margin-top:-2px;border-bottom:1px solid orangered*/"-->
-          {{receipt.product_offers_count}} подписок</span>
-        <span v-else style="/*position:absolute;left:-109px;margin-top:-2px*/">{{receipt.product_offers_count}} подписок</span>
+          {{receipt.product_offers.length}} подписок</span>
+        <span v-else style="/*position:absolute;left:-109px;margin-top:-2px*/">{{receipt.product_offers.length}} подписок</span>
       </td>
       <td>
         <button style="position: relative;left: -39px;" @click="$emit('pay_receipt', receipt.code)"
@@ -48,17 +48,36 @@
 </template>
 
 <script>
-import show_arrow_table from "../assets/show_arrow_table";
 export default {
   name: "receipts_table",
-  components: {show_arrow_table},
-  props: {
-    receipts: {
-      type: Array,
-      required: true
-    }
-  },
   methods: {
+
+    convert_date(dateString) {
+      const date = new Date(Date.parse(dateString));
+      const months = [
+        "января",
+        "февраля",
+        "марта",
+        "апреля",
+        "мая",
+        "июня",
+        "июля",
+        "августа",
+        "сентября",
+        "октября",
+        "ноября",
+        "декабря"
+      ];
+      return `${date.getDate()} ${months[date.getMonth()]} (${
+        date.getFullYear() % 1000
+      }г.)`
+    },
+
+  },
+  computed: {
+    receipts() {
+      return this.$store.getters.receipts
+    }
   }
 }
 </script>

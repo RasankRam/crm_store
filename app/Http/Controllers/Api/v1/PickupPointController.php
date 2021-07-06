@@ -23,7 +23,7 @@ class PickupPointController extends Controller
   {
     return response()->json([
       "status" => true,
-      "response" => new Pickup_pointCollection(PickupPoint::paginate(5)),
+      "response" => new Pickup_pointCollection(PickupPoint::paginate(10)),
     ], 200);
   }
 
