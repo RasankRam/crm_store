@@ -1,6 +1,8 @@
 {
   "ProfileTitle": "Profile",
+  "EmployeesRegistrationTitle": "Employees Registration",
   "Message_EnterName": "Enter name",
+  "CreateEmployee": "Create Employee",
   "Update": "Update",
   "Create": "Create",
   "Bill": "Bill",
@@ -13,6 +15,7 @@
   "Menu_Planning": "Planning",
   "Menu_NewRecord": "New record",
   "Menu_Categories": "Categories",
+  "Menu_EmployeesRegistration": "Employees Registration",
   "Title": "Title",
   "Limit": "Limit",
   "Message_EnterDescription": "Enter description",

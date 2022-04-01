@@ -50,6 +50,12 @@ const router = new vueRouter({
       meta: {layout: 'main', auth: true},
       component: () => import('../views/product_offers.vue'),
     },
+    {
+      path: '/employees_registration',
+      name: 'employees_registration',
+      meta: {layout: 'main', auth: true},
+      component: () => import('../views/employees_registration.vue'),
+    }
   ]
 })
 

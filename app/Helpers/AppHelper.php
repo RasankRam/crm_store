@@ -23,9 +23,7 @@ class AppHelper {
           $item = $class::where('code', $code)->first();
         }
         if ($item) {
-            self::generate_code($start,$class);
-           // self::generate_code($start,$class);
-            return false; // хз, зачем это
+            return self::generate_code($start,$class);
         } else {
             return $code;
         }
@@ -58,12 +56,12 @@ class AppHelper {
      * @return false
      */
 
-    public static function check_employee_head() {
+    public static function check_senior_employee() {
         $employee = self::check_employee();
         if (!$employee) {
             return false;
         }
-        if ($employee->is_head != 1) {
+        if ($employee->role == 'ordinary') {
             return false;
         }
         return $employee;

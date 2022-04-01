@@ -11,6 +11,7 @@ export default {
   getters: {
     user: state => state.user,
     isAuthenticated: state => !!state.token,
+    isSenior: state => state.user.role === 'senior'
   },
 
   actions: {
@@ -67,5 +68,5 @@ export default {
       localStorage.removeItem('user-token')
     },
 
-  }
+  },
 }

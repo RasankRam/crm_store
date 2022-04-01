@@ -2071,9 +2071,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _filters_localize_filter__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../filters/localize.filter */ "./resources/js/filters/localize.filter.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -2091,6 +2098,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -2113,10 +2125,23 @@ __webpack_require__.r(__webpack_exports__);
       }, {
         title: (0,_filters_localize_filter__WEBPACK_IMPORTED_MODULE_1__.default)('Menu_PickupPoints'),
         url: '/pickup_points'
+      }, {
+        title: (0,_filters_localize_filter__WEBPACK_IMPORTED_MODULE_1__.default)('Menu_EmployeesRegistration'),
+        url: '/employees_registration'
       }]
     };
   },
+  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapGetters)(['isSenior'])),
+  created: function created() {
+    this.set_nav_permission();
+  },
   methods: {
+    set_nav_permission: function set_nav_permission() {
+      var urlEmployeesRegistrationIndex = this.links.findIndex(function (item) {
+        return item.url === '/employees_registration';
+      });
+      this.links[urlEmployeesRegistrationIndex].permission = this.isSenior;
+    },
     reset: function reset() {
       var _this = this;
 
@@ -2942,6 +2967,16 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_2__.default({
     component: function component() {
       return __webpack_require__.e(/*! import() */ "resources_js_views_product_offers_vue").then(__webpack_require__.bind(__webpack_require__, /*! ../views/product_offers.vue */ "./resources/js/views/product_offers.vue"));
     }
+  }, {
+    path: '/employees_registration',
+    name: 'employees_registration',
+    meta: {
+      layout: 'main',
+      auth: true
+    },
+    component: function component() {
+      return __webpack_require__.e(/*! import() */ "resources_js_views_employees_registration_vue").then(__webpack_require__.bind(__webpack_require__, /*! ../views/employees_registration.vue */ "./resources/js/views/employees_registration.vue"));
+    }
   }]
 });
 router.beforeEach(function (to, from, next) {
@@ -3000,6 +3035,9 @@ __webpack_require__.r(__webpack_exports__);
     },
     isAuthenticated: function isAuthenticated(state) {
       return !!state.token;
+    },
+    isSenior: function isSenior(state) {
+      return state.user.role === 'senior';
     }
   },
   actions: {
@@ -4044,7 +4082,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "h5 {\n  margin-top:0 !important;\n}\n\n.pagination {\n  margin-top:8px !important;\n  margin-bottom: 0 !important;\n}\n\n.pagination li a {\n  line-height:26px;\n}\n\n.pagination .active_pagination {\n  background: linear-gradient(180deg, #EFDFD6 0%, #DFD5CF 52.6%, #e8d1c4 100%);\n  border: 1px solid #ACACAC;\n}\n\n.waves-effect {\n  z-index:0\n}\n\n.success {\n  background:#CCE4D1;\n  border-radius: 10px;\n  font-size:17px;\n  margin-bottom:25px;\n  letter-spacing: -0.015em;\n  color: #021742;\n  font-weight:500;\n}\n\n.closeable{\n  transition: all 1s 0s;\n  position:relative;\n  overflow-y:hidden;\n}\n\n.success span {\n  display:block;\n  transition: all 1s 0s;\n  padding: 22px 55px 22px 48px;\n  border-radius: 35px;\n}\n.success .cross {\n  position:absolute;\n  top: 6px;\n  right: 53px;\n  width: 13px;\n  height: 16px;\n}\n\n.success .cross:before, .success .cross:after {\n  height:17px;\n  background:#262626;\n}\n\n.error-block {\n  color:black;\n  border-radius:20px;\n  background: linear-gradient(270deg, #FF8159 0%, #FF8159 4.65%, rgba(196, 196, 196, 0) 4.66%, rgba(196, 196, 196, 0) 95.72%, #FF8159 95.76%, #FF8159 100%), linear-gradient(267.86deg, #FFE2AB 9.89%, #FFE1B5 75.84%);\n}\n\n.error-block .cross {\n  right: 42px;\n}\n\n.cross {\n  position:absolute;\n  width:12px;\n  height:12px;\n  top:11px;\n  right:6px;\n  transform: translate(-50%,0);\n  cursor:pointer;\n}\n\n.cross:before, .cross:after {\n  content: \"\";\n  position: absolute;\n  margin-top:-2px;\n  right:5px;\n  height: 16px;\n  width: 2px;\n  background-color: #C4C2C2;\n}\n\n.cross:before {\n  transform:rotate(45deg);\n}\n\n.cross:after {\n  transform:rotate(-45deg);\n}\n\n.btn-manage-round {\n  box-shadow: 0 0 0 1px rgb(190 190 190 / 25%);\n  background: radial-gradient(50% 50% at 50% 50%, #fdfdfd 14.58%, #f9f9f9 81.77%, #f0f0f0 100%);\n  border: 1px solid #949494;\n  width: 30px;\n  height: 32px;\n  border-radius: 50%;\n  color: #656565;\n  margin-right: 10px;\n}\n\nth {\n  font-weight:500 !important;\n  color:#474747 !important;\n  padding-top: 0 !important;\n}\n\n\n.content-wrapper {\n  padding: 14px 15px;\n  padding-bottom: 18px;\n  border: 1px solid #bdb7ab8c;\n  border-radius: 5px;\n  overflow: hidden;\n  box-shadow: 0px 0px 2px 1px rgb(29 113 37 / 10%), inset 0px 0px 2px 2px rgb(255 15 0 / 4%), inset 0px 0px 1px 1px rgb(129 159 58 / 13%), inset 0px 4px 250px rgb(255 233 165 / 25%), inset 0px 4px 67px rgb(196 244 255 / 10%);\n}\n\n/*.pagination li {*/\n/*  z-index:-1;*/\n/*}*/\n\n.custom-button {\n  display: inline-block;\n  background: linear-gradient(180deg, #F5F5F5 0%, #D2D2D2 100%);\n  border: 1px solid #7C7C7C;\n  box-sizing: border-box;\n  color: #3F4152;\n  padding: 4px 7px;\n  padding-top: 2px;\n  border-radius: 2px;\n  cursor:pointer;\n  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.25);\n}\n\n.custom-button:hover {\n  color: #3F4152;\n  text-decoration:none;\n  background: linear-gradient(180deg, #E9E9E9 0%, #ECECEC 100%);\n}\n\n.btn-manage-round .material-icons {\n  position: relative;\n  font-size:21px;\n  line-height:1;\n  left: -9.9px;\n  top: 1.5px;\n}\n\n.btn-manage-round .pencil {\n  font-size:19px;\n  top:0.9px;\n}\n\n\n/* m_modal */\n\n.modal {\n  font-family: -apple-system,BlinkMacSystemFont,avenir next,avenir,helvetica neue,helvetica,ubuntu,roboto,noto,segoe ui,arial,sans-serif;\n}\n\n.modal__overlay {\n  position: fixed;\n  top: 0;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  background: rgba(0,0,0,0.6);\n  display: flex;\n  justify-content: center;\n  align-items: center;\n}\n\n.modal__container {\n  background-color: #fff;\n  padding: 30px;\n  padding-top:18px;\n  padding-bottom:9px;\n  max-width: 500px;\n  max-height: 100vh;\n  border-radius: 4px;\n  overflow-y: auto;\n  box-sizing: border-box;\n}\n\n.modal__header {\n  margin-bottom:51px;\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n}\n\n.modal__title {\n  margin-top: 0;\n  margin-bottom: 0;\n  font-weight: 600;\n  font-size: 1.25rem;\n  line-height: 1.25;\n  color: #00449e;\n  box-sizing: border-box;\n}\n\n.modal__close {\n  background: transparent;\n  border: 0;\n  position: relative;\n  top: -6px;\n  right: -12px;\n}\n\n.modal__header .modal__close:before { content: \"\\2715\"; }\n\n.modal__content {\n  margin-top: 2rem;\n  margin-bottom: 2rem;\n  line-height: 1.5;\n  color: rgba(0,0,0,.8);\n}\n\n.modal__btn {\n  font-size: .875rem;\n  padding-left: 1rem;\n  padding-right: 1rem;\n  padding-top: .5rem;\n  padding-bottom: .5rem;\n  background-color: #e6e6e6;\n  color: rgba(0,0,0,.8);\n  border-radius: .25rem;\n  border-style: none;\n  border-width: 0;\n  cursor: pointer;\n  -webkit-appearance: button;\n  text-transform: none;\n  overflow: visible;\n  line-height: 1.15;\n  margin: 0;\n  will-change: transform;\n  -moz-osx-font-smoothing: grayscale;\n  -webkit-backface-visibility: hidden;\n  backface-visibility: hidden;\n  -webkit-transform: translateZ(0);\n  transform: translateZ(0);\n  transition: -webkit-transform .25s ease-out;\n  transition: transform .25s ease-out;\n  transition: transform .25s ease-out,-webkit-transform .25s ease-out;\n}\n\n.modal__btn:focus, .modal__btn:hover {\n  -webkit-transform: scale(1.05);\n  transform: scale(1.05);\n}\n\n.modal__btn-primary {\n  background-color: #00449e;\n  color: #fff;\n}\n\nnav {\n  background-color: transparent;\n}\n\n.app-sidenav {\n  bottom: auto !important;\n  padding-bottom: 0 !important;\n  top:96px;\n  padding-top:0;\n  border: 1px solid #bdb7ab8c;\n  border-radius: 0 5px 5px 0;\n  overflow: hidden;\n  box-shadow: 0px 0px 2px 1px rgb(29 113 37 / 10%), inset 0px 0px 2px 2px rgb(255 15 0 / 4%), inset 0px 0px 1px 1px rgb(129 159 58 / 13%), inset 0px 4px 250px rgb(255 233 165 / 25%), inset 0px 4px 67px rgb(196 244 255 / 10%);\n}\n\na:hover {\n  text-decoration:none;\n}\n\n\n/**************************\\\n  Demo Animation Style\n\\**************************/\n@keyframes mmfadeIn {\n  from { opacity: 0; }\n  to { opacity: 1; }\n}\n\n@keyframes mmfadeOut {\n  from { opacity: 1; }\n  to { opacity: 0; }\n}\n\n@keyframes mmslideIn {\n  from { transform: translateY(15%); }\n  to { transform: translateY(0); }\n}\n\n@keyframes mmslideOut {\n  from { transform: translateY(0); }\n  to { transform: translateY(-10%); }\n}\n\n.micromodal-slide {\n  display: none;\n}\n\n.micromodal-slide.is-open {\n  display: block;\n}\n\n.micromodal-slide[aria-hidden=\"false\"] .modal__overlay {\n  animation: mmfadeIn .3s cubic-bezier(0.0, 0.0, 0.2, 1);\n}\n\n.micromodal-slide[aria-hidden=\"false\"] .modal__container {\n  animation: mmslideIn .3s cubic-bezier(0, 0, .2, 1);\n}\n\n.micromodal-slide[aria-hidden=\"true\"] .modal__overlay {\n  animation: mmfadeOut .3s cubic-bezier(0.0, 0.0, 0.2, 1);\n}\n\n.micromodal-slide[aria-hidden=\"true\"] .modal__container {\n  animation: mmslideOut .3s cubic-bezier(0, 0, .2, 1);\n}\n\n.micromodal-slide .modal__container,\n.micromodal-slide .modal__overlay {\n  will-change: transform;\n}\n\n/* m_modal */\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "h5 {\n  margin-top:0 !important;\n}\n\n.pagination {\n  margin-top:8px !important;\n  margin-bottom: 0 !important;\n}\n\n.pagination li a {\n  line-height:26px;\n}\n\n.pagination .active_pagination {\n  background: linear-gradient(180deg, #EFDFD6 0%, #DFD5CF 52.6%, #e8d1c4 100%);\n  border: 1px solid #ACACAC;\n}\n\n.waves-effect {\n  z-index:0\n}\n\n.success {\n  background:#CCE4D1;\n  border-radius: 10px;\n  font-size:17px;\n  margin-bottom:25px;\n  letter-spacing: -0.015em;\n  color: #021742;\n  font-weight:500;\n}\n\n.closeable{\n  transition: all 1s 0s;\n  position:relative;\n  overflow-y:hidden;\n}\n\n.success span {\n  display:block;\n  transition: all 1s 0s;\n  padding: 22px 55px 22px 48px;\n  border-radius: 35px;\n}\n.success .cross {\n  position:absolute;\n  top: 6px;\n  right: 53px;\n  width: 13px;\n  height: 16px;\n}\n\n.success .cross:before, .success .cross:after {\n  height:17px;\n  background:#262626;\n}\n\n.error-block {\n  color:black;\n  border-radius:20px;\n  background: linear-gradient(270deg, #FF8159 0%, #FF8159 4.65%, rgba(196, 196, 196, 0) 4.66%, rgba(196, 196, 196, 0) 95.72%, #FF8159 95.76%, #FF8159 100%), linear-gradient(267.86deg, #FFE2AB 9.89%, #FFE1B5 75.84%);\n}\n\n.error-block .cross {\n  right: 42px;\n}\n\n.cross {\n  position:absolute;\n  width:12px;\n  height:12px;\n  top:11px;\n  right:6px;\n  transform: translate(-50%,0);\n  cursor:pointer;\n}\n\n.cross:before, .cross:after {\n  content: \"\";\n  position: absolute;\n  margin-top:-2px;\n  right:5px;\n  height: 16px;\n  width: 2px;\n  background-color: #C4C2C2;\n}\n\n.cross:before {\n  transform:rotate(45deg);\n}\n\n.cross:after {\n  transform:rotate(-45deg);\n}\n\n.btn-manage-round {\n  box-shadow: 0 0 0 1px rgb(190 190 190 / 25%);\n  background: radial-gradient(50% 50% at 50% 50%, #fdfdfd 14.58%, #f9f9f9 81.77%, #f0f0f0 100%);\n  border: 1px solid #949494;\n  width: 30px;\n  height: 32px;\n  border-radius: 50%;\n  color: #656565;\n  margin-right: 10px;\n}\n\nth {\n  font-weight:500 !important;\n  color:#474747 !important;\n  padding-top: 0 !important;\n}\n\n\n.content-wrapper {\n  padding: 14px 15px;\n  padding-bottom: 18px;\n  border: 1px solid #bdb7ab8c;\n  border-radius: 5px;\n  overflow: hidden;\n  box-shadow: 0px 0px 2px 1px rgb(29 113 37 / 10%), inset 0px 0px 2px 2px rgb(255 15 0 / 4%), inset 0px 0px 1px 1px rgb(129 159 58 / 13%), inset 0px 4px 250px rgb(255 233 165 / 25%), inset 0px 4px 67px rgb(196 244 255 / 10%);\n}\n\n/*.pagination li {*/\n/*  z-index:-1;*/\n/*}*/\n\n.custom-button {\n  display: inline-block;\n  background: linear-gradient(180deg, #F5F5F5 0%, #D2D2D2 100%);\n  border: 1px solid #7C7C7C;\n  box-sizing: border-box;\n  color: #3F4152;\n  padding: 4px 7px;\n  padding-top: 2px;\n  border-radius: 2px;\n  cursor:pointer;\n  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.25);\n}\n\n.custom-button:hover {\n  color: #3F4152;\n  text-decoration:none;\n  background: linear-gradient(180deg, #E9E9E9 0%, #ECECEC 100%);\n}\n\n.btn-manage-round .material-icons {\n  position: relative;\n  font-size:21px;\n  line-height:1;\n  left: -9.9px;\n  top: 1.5px;\n}\n\n.btn-manage-round .pencil {\n  font-size:19px;\n  top:0.9px;\n}\n\n\n/* m_modal */\n\n.modal {\n  font-family: -apple-system,BlinkMacSystemFont,avenir next,avenir,helvetica neue,helvetica,ubuntu,roboto,noto,segoe ui,arial,sans-serif;\n}\n\n.modal__overlay {\n  position: fixed;\n  top: 0;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  background: rgba(0,0,0,0.6);\n  display: flex;\n  justify-content: center;\n  align-items: center;\n}\n\n.modal__container {\n  background-color: #fff;\n  padding: 30px;\n  padding-top:18px;\n  padding-bottom:9px;\n  max-width: 500px;\n  max-height: 100vh;\n  border-radius: 4px;\n  overflow-y: auto;\n  box-sizing: border-box;\n}\n\n.modal__header {\n  margin-bottom:51px;\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n}\n\n.modal__title {\n  margin-top: 0;\n  margin-bottom: 0;\n  font-weight: 600;\n  font-size: 1.25rem;\n  line-height: 1.25;\n  color: #00449e;\n  box-sizing: border-box;\n}\n\n.modal__close {\n  background: transparent;\n  border: 0;\n  position: relative;\n  top: -6px;\n  right: -12px;\n}\n\n.modal__header .modal__close:before { content: \"\\2715\"; }\n\n.modal__content {\n  margin-top: 2rem;\n  margin-bottom: 2rem;\n  line-height: 1.5;\n  color: rgba(0,0,0,.8);\n}\n\n.modal__btn {\n  font-size: .875rem;\n  padding-left: 1rem;\n  padding-right: 1rem;\n  padding-top: .5rem;\n  padding-bottom: .5rem;\n  background-color: #e6e6e6;\n  color: rgba(0,0,0,.8);\n  border-radius: .25rem;\n  border-style: none;\n  border-width: 0;\n  cursor: pointer;\n  -webkit-appearance: button;\n  text-transform: none;\n  overflow: visible;\n  line-height: 1.15;\n  margin: 0;\n  will-change: transform;\n  -moz-osx-font-smoothing: grayscale;\n  -webkit-backface-visibility: hidden;\n  backface-visibility: hidden;\n  -webkit-transform: translateZ(0);\n  transform: translateZ(0);\n  transition: -webkit-transform .25s ease-out;\n  transition: transform .25s ease-out;\n  transition: transform .25s ease-out,-webkit-transform .25s ease-out;\n}\n\n.modal__btn:focus, .modal__btn:hover {\n  -webkit-transform: scale(1.05);\n  transform: scale(1.05);\n}\n\n.modal__btn-primary {\n  background-color: #00449e;\n  color: #fff;\n}\n\nnav {\n  background-color: transparent;\n}\n\n.app-sidenav {\n  bottom: auto !important;\n  padding-bottom: 0 !important;\n  top:96px;\n  padding-top:0;\n  border: 1px solid #bdb7ab8c;\n  border-radius: 0 5px 5px 0;\n  overflow: hidden;\n  box-shadow: 0px 0px 2px 1px rgb(29 113 37 / 10%), inset 0px 0px 2px 2px rgb(255 15 0 / 4%), inset 0px 0px 1px 1px rgb(129 159 58 / 13%), inset 0px 4px 250px rgb(255 233 165 / 25%), inset 0px 4px 67px rgb(196 244 255 / 10%);\n}\n\na:hover {\n  text-decoration:none;\n}\n\n.sidenav li > a {\n  padding-top:10px;\n  padding-bottom:10px;\n  height: auto;\n  line-height: 1.6;\n}\n\n\n/**************************\\\n  Demo Animation Style\n\\**************************/\n@keyframes mmfadeIn {\n  from { opacity: 0; }\n  to { opacity: 1; }\n}\n\n@keyframes mmfadeOut {\n  from { opacity: 1; }\n  to { opacity: 0; }\n}\n\n@keyframes mmslideIn {\n  from { transform: translateY(15%); }\n  to { transform: translateY(0); }\n}\n\n@keyframes mmslideOut {\n  from { transform: translateY(0); }\n  to { transform: translateY(-10%); }\n}\n\n.micromodal-slide {\n  display: none;\n}\n\n.micromodal-slide.is-open {\n  display: block;\n}\n\n.micromodal-slide[aria-hidden=\"false\"] .modal__overlay {\n  animation: mmfadeIn .3s cubic-bezier(0.0, 0.0, 0.2, 1);\n}\n\n.micromodal-slide[aria-hidden=\"false\"] .modal__container {\n  animation: mmslideIn .3s cubic-bezier(0, 0, .2, 1);\n}\n\n.micromodal-slide[aria-hidden=\"true\"] .modal__overlay {\n  animation: mmfadeOut .3s cubic-bezier(0.0, 0.0, 0.2, 1);\n}\n\n.micromodal-slide[aria-hidden=\"true\"] .modal__container {\n  animation: mmslideOut .3s cubic-bezier(0, 0, .2, 1);\n}\n\n.micromodal-slide .modal__container,\n.micromodal-slide .modal__overlay {\n  will-change: transform;\n}\n\n/* m_modal */\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -24916,23 +24954,36 @@ var render = function() {
     [
       _vm._l(_vm.links, function(link) {
         return _c(
-          "router-link",
-          {
-            key: link.url,
-            attrs: {
-              tag: "li",
-              "active-class": "active",
-              to: link.url,
-              exact: link.exact
-            }
-          },
+          "div",
+          { key: link.url },
           [
-            _c(
-              "a",
-              { staticClass: "waves-effect pointer", attrs: { href: "#" } },
-              [_vm._v(_vm._s(link.title))]
-            )
-          ]
+            (link.hasOwnProperty("permission")
+            ? link.permission
+            : true)
+              ? _c(
+                  "router-link",
+                  {
+                    attrs: {
+                      tag: "li",
+                      "active-class": "active",
+                      to: link.url,
+                      exact: link.exact
+                    }
+                  },
+                  [
+                    _c(
+                      "a",
+                      {
+                        staticClass: "waves-effect pointer",
+                        attrs: { href: "#" }
+                      },
+                      [_vm._v(_vm._s(link.title))]
+                    )
+                  ]
+                )
+              : _vm._e()
+          ],
+          1
         )
       }),
       _vm._v(" "),
@@ -45279,7 +45330,7 @@ var index = {
 /***/ ((module) => {
 
 "use strict";
-module.exports = JSON.parse('{"ProfileTitle":"Profile","Message_EnterName":"Enter name","Update":"Update","Create":"Create","Bill":"Bill","Name":"Name","Exit":"Exit","Edit":"Edit","Menu_Bill":"Bill","Detail_Title":"Detail","Menu_History":"History","Menu_Planning":"Planning","Menu_NewRecord":"New record","Menu_Categories":"Categories","Title":"Title","Limit":"Limit","Message_EnterDescription":"Enter description","Message_CategoryTitle":"Enter category name","Message_MinLength":"Mininum length is","Category_HasBeenCreated":"Category has been created","Category_HasBeenUpdated":"Category has been updated","SelectCategory":"Select category","Amount":"Amount","Date":"Date","Description":"Description","Category":"Category","Categories":"Categories","NoCategories":"No categories","Type":"Type","Open":"Open","OpenRecord":"Open record","BillInCurrency":"Bill in currencies","Currency":"Currency","CurrencyType":"Rate","CurrencyAmountTitle":"Currencies rates","Income":"Income","Outcome":"Outcome","Of":"of","History_Title":"Records history","NoRecords":"No records","AddFirst":"Add first","Back":"Back","Forward":"Forward","CostsForCategories":"Categories costs","MoreThan":"Excess on","Stayed":"Left","RecordHasBeenCreated":"Record has been created","NotEnoughMoney":"Not enough money","CRM_Title":"CRM by Vladilen","Message_UsernameRequired":"Username field is required","Message_EmailRequired":"Email field is required","Message_EmailValid":"Enter valid email","Password":"Password","Message_EnterPassword":"Enter password","Login":"Login","NoAccount":"Has no account?","HasAccount":"Has account?","Register":"Register","AcceptRules":"Agree with rules","CreateNewRecord":"Create new record","Logout":"You have logged out","FirstLogin":"First login","NoUserWithEmail":"No user with email","WrongPassword":"Invalid password","EmailInUse":"Email is already in use","Error":"Error","Menu_Receipts":"Receipts","Menu_Office":"Office","Menu_Products":"Goods","Menu_Points":"Point Management","Menu_Clients":"Clients","Clients":"Clients","Profile":"Profile","Office":"Office","Publications":"Publications","Receipts":"Receipts","Email":"Email","PasswordConfirm":"Confirm Password","UserName":"Username","Subscriptions":"Subscriptions","Products":"Products","Menu_PickupPoints":"Pickup Points","Pickup Points":"Pickup Points","Product Offers":"Sales","Menu_Sales":"Sales","Menu_Content":"Content management","Message_EnterPasswordConfirm":"Passwords don\'t match"}');
+module.exports = JSON.parse('{"ProfileTitle":"Profile","EmployeesRegistrationTitle":"Employees Registration","Message_EnterName":"Enter name","CreateEmployee":"Create Employee","Update":"Update","Create":"Create","Bill":"Bill","Name":"Name","Exit":"Exit","Edit":"Edit","Menu_Bill":"Bill","Detail_Title":"Detail","Menu_History":"History","Menu_Planning":"Planning","Menu_NewRecord":"New record","Menu_Categories":"Categories","Menu_EmployeesRegistration":"Employees Registration","Title":"Title","Limit":"Limit","Message_EnterDescription":"Enter description","Message_CategoryTitle":"Enter category name","Message_MinLength":"Mininum length is","Category_HasBeenCreated":"Category has been created","Category_HasBeenUpdated":"Category has been updated","SelectCategory":"Select category","Amount":"Amount","Date":"Date","Description":"Description","Category":"Category","Categories":"Categories","NoCategories":"No categories","Type":"Type","Open":"Open","OpenRecord":"Open record","BillInCurrency":"Bill in currencies","Currency":"Currency","CurrencyType":"Rate","CurrencyAmountTitle":"Currencies rates","Income":"Income","Outcome":"Outcome","Of":"of","History_Title":"Records history","NoRecords":"No records","AddFirst":"Add first","Back":"Back","Forward":"Forward","CostsForCategories":"Categories costs","MoreThan":"Excess on","Stayed":"Left","RecordHasBeenCreated":"Record has been created","NotEnoughMoney":"Not enough money","CRM_Title":"CRM by Vladilen","Message_UsernameRequired":"Username field is required","Message_EmailRequired":"Email field is required","Message_EmailValid":"Enter valid email","Password":"Password","Message_EnterPassword":"Enter password","Login":"Login","NoAccount":"Has no account?","HasAccount":"Has account?","Register":"Register","AcceptRules":"Agree with rules","CreateNewRecord":"Create new record","Logout":"You have logged out","FirstLogin":"First login","NoUserWithEmail":"No user with email","WrongPassword":"Invalid password","EmailInUse":"Email is already in use","Error":"Error","Menu_Receipts":"Receipts","Menu_Office":"Office","Menu_Products":"Goods","Menu_Points":"Point Management","Menu_Clients":"Clients","Clients":"Clients","Profile":"Profile","Office":"Office","Publications":"Publications","Receipts":"Receipts","Email":"Email","PasswordConfirm":"Confirm Password","UserName":"Username","Subscriptions":"Subscriptions","Products":"Products","Menu_PickupPoints":"Pickup Points","Pickup Points":"Pickup Points","Product Offers":"Sales","Menu_Sales":"Sales","Menu_Content":"Content management","Message_EnterPasswordConfirm":"Passwords don\'t match"}');
 
 /***/ }),
 
@@ -45290,7 +45341,7 @@ module.exports = JSON.parse('{"ProfileTitle":"Profile","Message_EnterName":"Ente
 /***/ ((module) => {
 
 "use strict";
-module.exports = JSON.parse('{"ProfileTitle":"Профиль","Message_EnterName":"Введите имя","Update":"Обновить","Create":"Создать","Bill":"Счет","Name":"Имя","Exit":"Выйти","Edit":"Редактировать","Menu_Bill":"Счет","Detail_Title":"Запись","Menu_History":"История","Menu_Planning":"Планирование","Menu_NewRecord":"Новая запись","Menu_Categories":"Категории","Выйти":"Выйти","Title":"Название","Limit":"Лимит","Message_EnterDescription":"Введите описание","Message_CategoryTitle":"Введите название категории","Message_MinLength":"Минимальная значение","Category_HasBeenCreated":"Категория была создана","Category_HasBeenUpdated":"Категория упешно обновлена","SelectCategory":"Выберите категорию","Amount":"Сумма","Date":"Дата","Description":"Описание","Category":"Категория","Categories":"Категории","NoCategories":"Категорий пока нет","Type":"Тип","Open":"Открыть","OpenRecord":"Посмотреть запись","BillInCurrency":"Счет в валюте","Currency":"Валюта","CurrencyType":"Курс","CurrencyAmountTitle":"Курс валют","Income":"Доход","Outcome":"Расход","Of":"из","History_Title":"История записей","NoRecords":"Записей пока нет","AddFirst":"Добавьте первую","Back":"Назад","Forward":"Вперед","CostsForCategories":"Расходы по категориям","MoreThan":"Превышение на","Stayed":"Осталось","RecordHasBeenCreated":"Запись успешно создана","NotEnoughMoney":"Недостаточно средств на счете","CRM_Title":"Домашняя бухгалтерия","Message_UsernameRequired":"Поле Username не должно быть пустым","Message_EmailRequired":"Поле Email не должно быть пустым","Message_EmailValid":"Введите корретный Email","Password":"Пароль","Message_EnterPassword":"Введите пароль","Login":"Войти","NoAccount":"Нет аккаунта?","HasAccount":"Уже есть аккаунт?","Register":"Зарегистрироваться","AcceptRules":"С правилами согласен","CreateNewRecord":"Создать новую запись","Logout":"Вы вышли из системы","FirstLogin":"Для начала войдите в систему","NoUserWithEmail":"Пользователя с таким email не существует","WrongPassword":"Неверный пароль","EmailInUse":"Email уже занят","Error":"Ошибка","Menu_Receipts":"Квитанции","Menu_Office":"Отделение","Menu_Products":"Товары","Menu_Clients":"Клиенты","Menu_Points":"Управление поинтами","Receipts":"Квитанции","Publications":"Издания","Office":"Отделение","Clients":"Клиенты","Profile":"Профиль","Email":"Эл. почта","PasswordConfirm":"Подвердите пароль","UserName":"Имя пользователя","Subscriptions":"Подписки","Products":"Продукты","Menu_PickupPoints":"Пункты выдачи","Pickup Points":"Пункты выдачи","Product Offers":"Продажи","Menu_Sales":"Продажи","Menu_Content":"Управление контентом","Message_EnterPasswordConfirm":"Пароли не совпадают"}');
+module.exports = JSON.parse('{"ProfileTitle":"Профиль","EmployeesRegistrationTitle":"Регистрация сотрудников","Message_EnterName":"Введите имя","CreateEmployee":"Создать сотрудника","Update":"Обновить","Create":"Создать","Bill":"Счет","Name":"Имя","Exit":"Выйти","Edit":"Редактировать","Menu_Bill":"Счет","Detail_Title":"Запись","Menu_History":"История","Menu_Planning":"Планирование","Menu_NewRecord":"Новая запись","Menu_Categories":"Категории","Menu_EmployeesRegistration":"Регистрация сотрудников","Выйти":"Выйти","Title":"Название","Limit":"Лимит","Message_EnterDescription":"Введите описание","Message_CategoryTitle":"Введите название категории","Message_MinLength":"Минимальная значение","Category_HasBeenCreated":"Категория была создана","Category_HasBeenUpdated":"Категория упешно обновлена","SelectCategory":"Выберите категорию","Amount":"Сумма","Date":"Дата","Description":"Описание","Category":"Категория","Categories":"Категории","NoCategories":"Категорий пока нет","Type":"Тип","Open":"Открыть","OpenRecord":"Посмотреть запись","BillInCurrency":"Счет в валюте","Currency":"Валюта","CurrencyType":"Курс","CurrencyAmountTitle":"Курс валют","Income":"Доход","Outcome":"Расход","Of":"из","History_Title":"История записей","NoRecords":"Записей пока нет","AddFirst":"Добавьте первую","Back":"Назад","Forward":"Вперед","CostsForCategories":"Расходы по категориям","MoreThan":"Превышение на","Stayed":"Осталось","RecordHasBeenCreated":"Запись успешно создана","NotEnoughMoney":"Недостаточно средств на счете","CRM_Title":"Домашняя бухгалтерия","Message_UsernameRequired":"Поле Username не должно быть пустым","Message_EmailRequired":"Поле Email не должно быть пустым","Message_EmailValid":"Введите корретный Email","Password":"Пароль","Message_EnterPassword":"Введите пароль","Login":"Войти","NoAccount":"Нет аккаунта?","HasAccount":"Уже есть аккаунт?","Register":"Зарегистрироваться","AcceptRules":"С правилами согласен","CreateNewRecord":"Создать новую запись","Logout":"Вы вышли из системы","FirstLogin":"Для начала войдите в систему","NoUserWithEmail":"Пользователя с таким email не существует","WrongPassword":"Неверный пароль","EmailInUse":"Email уже занят","Error":"Ошибка","Menu_Receipts":"Квитанции","Menu_Office":"Отделение","Menu_Products":"Товары","Menu_Clients":"Клиенты","Menu_Points":"Управление поинтами","Receipts":"Квитанции","Publications":"Издания","Office":"Отделение","Clients":"Клиенты","Profile":"Профиль","Email":"Эл. почта","PasswordConfirm":"Подвердите пароль","UserName":"Имя пользователя","Subscriptions":"Подписки","Products":"Продукты","Menu_PickupPoints":"Пункты выдачи","Pickup Points":"Пункты выдачи","Product Offers":"Продажи","Menu_Sales":"Продажи","Menu_Content":"Управление контентом","Message_EnterPasswordConfirm":"Пароли не совпадают"}');
 
 /***/ })
 
@@ -45400,7 +45451,7 @@ module.exports = JSON.parse('{"ProfileTitle":"Профиль","Message_EnterName
 /******/ 		// This function allow to reference async chunks
 /******/ 		__webpack_require__.u = (chunkId) => {
 /******/ 			// return url for filenames not based on template
-/******/ 			if ({"resources_js_views_login_vue":1,"resources_js_views_receipts_vue":1,"resources_js_views_pick-up_points_vue":1,"resources_js_views_products_vue":1,"resources_js_views_clients_vue":1,"resources_js_views_profile_vue":1,"resources_js_views_product_offers_vue":1}[chunkId]) return "js/" + chunkId + ".js";
+/******/ 			if ({"resources_js_views_login_vue":1,"resources_js_views_receipts_vue":1,"resources_js_views_pick-up_points_vue":1,"resources_js_views_products_vue":1,"resources_js_views_clients_vue":1,"resources_js_views_profile_vue":1,"resources_js_views_product_offers_vue":1,"resources_js_views_employees_registration_vue":1}[chunkId]) return "js/" + chunkId + ".js";
 /******/ 			// return url for filenames based on template
 /******/ 			return undefined;
 /******/ 		};

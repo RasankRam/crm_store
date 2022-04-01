@@ -20,6 +20,7 @@ class CreateEmployeesTable extends Migration
             $table->string('code', 10);
             $table->string('password');
             $table->string('email', 70);
+            $table->string('role', 30)->default('ordinary');
 //            $table->tinyInteger('is_head')->default(0);
 //            $table->tinyInteger('is_general')->default(0);
 //            $table->tinyInteger('is_english')->default(0);

@@ -1,6 +1,8 @@
 {
   "ProfileTitle": "Профиль",
+  "EmployeesRegistrationTitle": "Регистрация сотрудников",
   "Message_EnterName": "Введите имя",
+  "CreateEmployee": "Создать сотрудника",
   "Update": "Обновить",
   "Create": "Создать",
   "Bill": "Счет",
@@ -13,6 +15,7 @@
   "Menu_Planning": "Планирование",
   "Menu_NewRecord": "Новая запись",
   "Menu_Categories": "Категории",
+  "Menu_EmployeesRegistration": "Регистрация сотрудников",
   "Выйти": "Выйти",
   "Title": "Название",
   "Limit": "Лимит",

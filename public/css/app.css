@@ -276,6 +276,13 @@ a:hover {
   text-decoration:none;
 }
 
+.sidenav li > a {
+  padding-top:10px;
+  padding-bottom:10px;
+  height: auto;
+  line-height: 1.6;
+}
+
 
 /**************************\
   Demo Animation Style

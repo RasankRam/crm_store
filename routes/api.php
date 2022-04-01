@@ -84,7 +84,7 @@ Route::get('reset', function () {
  * Аутентификация
  */
 
-Route::post('/create',[EmployeeController::class,"create"]);
+Route::post('/register_employee',[EmployeeController::class,"register_employee"]);
 Route::post('/login',[EmployeeController::class,"login"]);
 
 /**
@@ -120,6 +120,7 @@ Route::group(['middleware' => 'bearer_auth'], function () {
 Route::group(['middleware' => 'bearer_auth'], function () {
     Route::get('product_offers', [ProductOfferController::class,'index']);
     Route::get('product_offers/{code}', [ProductOfferController::class,'show_code']);
+    Route::get('product_offers/get_deliver_status/{code}', [ProductOfferController::class, 'get_deliver_status']);
     Route::get('product_offers/deliver/{code}', [ProductOfferController::class,'deliver']);
     Route::post('product_offers', [ProductOfferController::class, 'store']);
     Route::delete('product_offers/{product_offer}', [ProductOfferController::class, 'destroy']);

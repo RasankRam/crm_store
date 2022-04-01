@@ -1,35 +1,55 @@
 <template>
   <ul class="sidenav app-sidenav" :class="{open: value}">
-      <router-link
+      <div
         v-for="link in links"
         :key="link.url"
-        tag="li"
-        active-class="active"
-        :to="link.url"
-        :exact="link.exact"
       >
-        <a href="#" class="waves-effect pointer">{{link.title}}</a>
-      </router-link>
+        <router-link
+          v-if="link.hasOwnProperty('permission') ? link.permission : true"
+          tag="li"
+          active-class="active"
+          :to="link.url"
+          :exact="link.exact"
+        >
+          <a href="#" class="waves-effect pointer">{{link.title}}</a>
+        </router-link>
+      </div>
       <a @click.prevent="reset()" class="reset btn waves-effect">Сбросить проект</a>
   </ul>
 </template>
 
 
 <script>
+  import { mapGetters } from 'vuex'
   import axios from 'axios'
   import localizeFilter from "../../filters/localize.filter"
   export default {
     props: ['value'],
-    data: () => ({
-      links: [
-        { title: localizeFilter('Menu_Receipts'), url: '/', exact: true },
-        { title: localizeFilter('Menu_Sales'), url: '/product_offers' },
-        { title: localizeFilter('Menu_Products'), url: '/products' },
-        { title: localizeFilter('Menu_Clients'), url: '/clients' },
-        { title: localizeFilter('Menu_PickupPoints'), url: '/pickup_points' },
-      ]
-    }),
+    data() {
+      return {
+        links: [
+          { title: localizeFilter('Menu_Receipts'), url: '/', exact: true },
+          { title: localizeFilter('Menu_Sales'), url: '/product_offers' },
+          { title: localizeFilter('Menu_Products'), url: '/products' },
+          { title: localizeFilter('Menu_Clients'), url: '/clients' },
+          { title: localizeFilter('Menu_PickupPoints'), url: '/pickup_points' },
+          { title: localizeFilter('Menu_EmployeesRegistration'), url: '/employees_registration' }
+        ]
+      }
+    },
+    computed: {
+      ...mapGetters([
+        'isSenior'
+      ])
+    },
+    created() {
+      this.set_nav_permission()
+    },
     methods: {
+      set_nav_permission() {
+        const urlEmployeesRegistrationIndex = this.links.findIndex(item => item.url === '/employees_registration');
+        this.links[urlEmployeesRegistrationIndex].permission = this.isSenior
+      },
       reset() {
         this.$store.dispatch('auth_logout').then(() => {
           axios.get('/api/reset')

@@ -43,6 +43,7 @@ return [
             'code' => 'E-99999999',
             'password' => Hash::make('general'), // general
             'email' => 'Peroman49@yandex.ru',
+            'role' => 'ordinary',
 //            'is_head' => 1,
 //            'is_general' => 1,
             'created_at' => Carbon::now(),
@@ -53,6 +54,7 @@ return [
             'code' => 'E-99999998',
             'password' => Hash::make('employee'), // employee
             'email' => 'Peroman49@yandex.ru',
+            'role'  => 'senior',
 //            'is_head' => 0,
 //            'is_general' => 0,
             'created_at' => Carbon::now(),
@@ -63,6 +65,7 @@ return [
             'code' => 'E-99999997',
             'password' => Hash::make('employee_head'), // employee_head
             'email' => 'Peroman49@yandex.ru',
+            'role'  => 'ordinary',
 //            'is_head' => 1,
 //            'is_general' => 0,
             'created_at' => Carbon::now(),

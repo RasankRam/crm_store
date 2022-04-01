@@ -33,16 +33,15 @@ class EmployeeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function create(Request $request)
+    public function register_employee(Request $request)
     {
-        $request_data = $request->only(['name','username','password','email','id_office']);
+        $request_data = $request->only(['name','username','password','email']);
 
         $validator = Validator::make($request_data, [
             "name" => "required",
             "username" => "required",
             "password" => "required",
             "email" => "required",
-            "id_office" => "required"
         ]);
 
         if ($validator->fails()) {
@@ -52,11 +51,11 @@ class EmployeeController extends Controller
             ],422);
         }
 
-        if (Employee::where('username',$request->username)->first()) {
-            return response()->json([
-                "status" => false,
-                "error" => "Email already in use",
-            ], 400);
+        if (!AppHelper::check_senior_employee()) {
+          return response()->json([
+            "status" => false,
+            "errors" => "Access denied"
+          ]);
         }
 
         $unique_code = AppHelper::generate_code("E", \App\Models\Employee::class);
@@ -66,7 +65,6 @@ class EmployeeController extends Controller
             "code" => $unique_code,
             "password" => Hash::make($request->password),
             "email" => $request->email,
-            "id_office" => $request->id_office
         ]);
 
         return response()->json([

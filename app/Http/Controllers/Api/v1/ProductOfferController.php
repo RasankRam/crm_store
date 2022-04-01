@@ -87,6 +87,29 @@ class ProductOfferController extends Controller
 
     }
 
+    public function get_deliver_status($code) {
+      if (!$code) {
+        return response()->json([
+          "status" => false,
+          "error" => "code is empty"
+        ])->setStatusCode(404, "code is empty");
+      }
+
+      $product_offer = ProductOffer::where('code', $code)->first();
+
+      if (!$product_offer) {
+        return response()->json([
+          "status" => false,
+          "error" => "Product Offer not found"
+        ]);
+      }
+
+      return response()->json([
+        "status" => true,
+        "response" => $product_offer->delivered_at ? $product_offer->delivered_at : "The product has not been delivered yet"
+      ]);
+    }
+
     // Update the specified in storage (patch)
 
     /**
