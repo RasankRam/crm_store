@@ -47,8 +47,6 @@ import { required, minLength } from 'vuelidate/lib/validators'
 import messages from '../utils/messages';
 import localizeFilter from '../filters/localize.filter';
 import axios from "axios";
-import router from "../router";
-
 
 export default {
   name: "Login",
