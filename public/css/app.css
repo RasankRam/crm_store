@@ -5982,7 +5982,6 @@ select:focus {
 
 button:focus {
   outline: none;
-  background-color: #1d288f;
 }
 
 label {
