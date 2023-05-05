@@ -207,3 +207,6 @@
 172.21.0.1 - - [05/May/2023:12:09:48 +0000] "GET /api/deliveries HTTP/1.1" 200 268 "http://localhost:9112/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36"
 172.21.0.1 - - [05/May/2023:12:09:48 +0000] "GET /api/receipts?page=1 HTTP/1.1" 200 4718 "http://localhost:9112/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36"
 172.21.0.1 - - [05/May/2023:12:09:57 +0000] "GET /login HTTP/1.1" 200 420 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36"
+172.21.0.1 - - [05/May/2023:12:10:52 +0000] "GET /login HTTP/1.1" 200 420 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36"
+172.21.0.1 - - [05/May/2023:12:10:52 +0000] "GET /js/app.js HTTP/1.1" 304 0 "http://localhost:9112/login" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36"
+172.21.0.1 - - [05/May/2023:12:10:52 +0000] "GET /login HTTP/1.1" 200 420 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36"
