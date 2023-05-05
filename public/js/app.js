@@ -2654,8 +2654,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-console.log("http://localhost:9112");
-(axios__WEBPACK_IMPORTED_MODULE_18___default().defaults.baseURL) = "http://localhost:9112";
+console.log("http://77.232.132.37:9112");
+(axios__WEBPACK_IMPORTED_MODULE_18___default().defaults.baseURL) = "http://77.232.132.37:9112";
 vue__WEBPACK_IMPORTED_MODULE_20__.default.prototype.$Cookies = (js_cookie__WEBPACK_IMPORTED_MODULE_1___default());
 
 vue__WEBPACK_IMPORTED_MODULE_20__.default.prototype.$initials = function (str) {
